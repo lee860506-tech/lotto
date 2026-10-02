@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0b0e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="대한민국 동행복권 1회부터 1243회까지 역대 1등 당첨번호 완전 배제 & 최다 출현 번호 가중 추첨 프리미엄 VIP 로또 분석기">
+  <title>LOTTO VIP GENESIS PRO - 1등 번호 생성기</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%230a0b0e' stroke='%23d4af37' stroke-width='4'/><text x='50' y='64' font-size='42' font-family='Arial, sans-serif' font-weight='900' fill='%23fef08a' text-anchor='middle'>7</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%230a0b0e' stroke='%23d4af37' stroke-width='4'/><text x='50' y='64' font-size='42' font-family='Arial, sans-serif' font-weight='900' fill='%23fef08a' text-anchor='middle'>7</text></svg>">
+
+  <!-- Fonts: Pretendard Variable & Montserrat -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- 1. VIP BRAND HEADER -->
+    <header class="vip-header">
+      <div class="vip-badge-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        PREMIUM VIP EDITION
+      </div>
+      <h1 class="brand-title">LOTTO VIP PRO</h1>
+      <p class="brand-subtitle">역대 1등 조합 100% 완전 배제 &middot; 최다 출현 가중치 추첨 엔진</p>
+    </header>
+
+    <!-- 2. STATUS & REALTIME SYNC BAR -->
+    <div class="vip-status-bar">
+      <div class="status-left">
+        <span class="status-indicator"></span>
+        <span class="status-text">공식 DB: <strong class="status-highlight" id="stat-total-rounds">1,243회차</strong> (<span id="stat-latest-round">제 1243회</span>)</span>
+      </div>
+      <div class="status-actions">
+        <button id="btn-sync-data" class="mini-action-btn" title="동행복권 최신 회차 동기화">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+          최신 동기화
+        </button>
+        <button id="btn-toggle-sound" class="mini-action-btn active" title="효과음 켜기/끄기">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          효과음 ON
+        </button>
+        <button id="btn-install-pwa" class="mini-action-btn" style="display: none;" title="스마트폰/PC 앱으로 설치">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          앱 설치
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. ALGORITHM CONSOLE CARD -->
+    <section class="vip-card" id="control-card">
+      <div class="control-group">
+        <div class="control-label">
+          <span>1. 분석 추첨 모드 선택</span>
+          <span class="control-badge">스마트 통계 필터 가동</span>
+        </div>
+        <div class="mode-grid">
+          <!-- Mode 1: Balance (Default) -->
+          <div class="mode-card active" data-mode="balance">
+            <div class="mode-header">
+              <span class="mode-name">VIP 골드 밸런스</span>
+              <span class="mode-tag">추천 1위</span>
+            </div>
+            <p class="mode-desc">역대 최다 출현 핫(Hot) 번호 70% + 균형 번호 30% 배합. 1등 기출 조합 완벽 배제.</p>
+          </div>
+
+          <!-- Mode 2: Ultra Hot -->
+          <div class="mode-card" data-mode="ultra_hot">
+            <div class="mode-header">
+              <span class="mode-name">울트라 핫(Hot) 집중</span>
+              <span class="mode-tag">고빈도수</span>
+            </div>
+            <p class="mode-desc">1회~1243회 동안 출현 빈도가 가장 높은 최상위 핵심 번호군을 집중 타겟팅.</p>
+          </div>
+
+          <!-- Mode 3: Cold Rebound -->
+          <div class="mode-card" data-mode="cold">
+            <div class="mode-header">
+              <span class="mode-name">골든 콜드(Cold) 반등</span>
+              <span class="mode-tag">미출현수</span>
+            </div>
+            <p class="mode-desc">장기 미출현 및 최근 잠복 중인 번호의 통계적 반등 회귀 확률을 포착.</p>
+          </div>
+
+          <!-- Mode 4: Pure Random Exclude -->
+          <div class="mode-card" data-mode="pure_random">
+            <div class="mode-header">
+              <span class="mode-name">순수 정밀 난수</span>
+              <span class="mode-tag">1등 제외만</span>
+            </div>
+            <p class="mode-desc">완전 무작위 난수 기반이되, 역대 1등으로 나왔던 6자리는 100% 걸러냅니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Count Selector -->
+      <div class="control-group">
+        <div class="control-label">
+          <span>2. 게임 수 선택</span>
+          <span class="control-badge">실제 복권 1장 = 5게임</span>
+        </div>
+        <div class="game-count-bar">
+          <button class="game-btn" data-count="1">
+            1게임
+            <span class="sub">1,000원</span>
+          </button>
+          <button class="game-btn active" data-count="5">
+            5게임
+            <span class="sub">1장 (5,000원)</span>
+          </button>
+          <button class="game-btn" data-count="10">
+            10게임
+            <span class="sub">2장 (10,000원)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Primary Action Button -->
+      <div class="generate-action-wrap">
+        <button id="btn-generate" class="btn-generate-vip">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          VIP 1등 엄선 번호 생성하기
+        </button>
+      </div>
+    </section>
+
+    <!-- 4. RESULTS SECTION -->
+    <section class="vip-card" id="results-card">
+      <h2 class="card-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        엄선된 VIP 추천 조합
+      </h2>
+
+      <div class="results-container" id="results-list">
+        <!-- Dynamically populated games -->
+      </div>
+
+      <!-- Batch Actions Bar -->
+      <div class="batch-actions-bar" id="batch-actions-bar">
+        <button id="btn-copy-all" class="secondary-action-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          전체 번호 텍스트 복사
+        </button>
+        <button id="btn-print" class="secondary-action-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+          용지 인쇄 / PDF 저장
+        </button>
+        <button class="secondary-action-btn" onclick="document.getElementById('stats-card').scrollIntoView({behavior:'smooth'})">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          통계 리포트 확인
+        </button>
+      </div>
+    </section>
+
+    <!-- 5. MATHEMATICAL PROOF & 100만원 가치 검증 금고 -->
+    <section class="vip-card" id="proof-card">
+      <div class="proof-box">
+        <div class="proof-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          100만원 가치의 알고리즘 증명 (VIP Fact Sheet)
+        </div>
+        <div class="proof-body">
+          <p>
+            &bull; <strong>역대 1등 6자리 재출현 확률 = 0%</strong>: 2002년 1회부터 현재 1,243회까지 20년이 넘는 한국 로또 역사상, <span class="proof-highlight">이전에 1등으로 당첨되었던 6개 숫자가 똑같이 1등으로 다시 나온 적은 단 0회(Zero)</span>입니다.
+          </p>
+          <p style="margin-top: 0.35rem;">
+            &bull; <strong>기출 조합 자동 파쇄 시스템</strong>: 본 앱은 공식 1,243회의 1등 조합 7,458개 숫자를 실시간 대조하여, 과거 1등과 100% 동일한 비효율 조합을 원천 차단하고 순수 유니크 조합만 추출합니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. NUMBER FREQUENCY STATISTICS DRAWER -->
+    <section class="vip-card" id="stats-card">
+      <button class="stats-drawer-toggle" id="btn-toggle-stats">
+        <span style="display:flex; align-items:center; gap:0.5rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+          1~45번 전체 번호별 공식 출현 빈도 순위표
+        </span>
+        <span class="toggle-arrow" style="font-size:0.8rem; color:var(--gold-light);">▼ 펼치기</span>
+      </button>
+
+      <div class="stats-grid-container" id="stats-grid-container" style="display: none;">
+        <!-- Filled dynamically by app.js -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="vip-toast" id="vip-toast"></div>
+
+  <!-- LOAD DATA & ENGINE -->
+  <script src="lotto_history.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
